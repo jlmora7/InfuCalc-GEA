@@ -46,5 +46,4 @@ Puedes ver la app en vivo (tras despliegue con Streamlit Cloud):
 
 ## 🩺 Autor
 
-Creado por **José Luis Mora Loján**  
-Contacto: tu.email@ejemplo.com
+Creado por José Luis Mora Loján
