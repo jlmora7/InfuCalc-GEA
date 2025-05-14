@@ -126,6 +126,9 @@ mensajes = {
         "peso": "Patient weight (kg)",
         "resultado_mcg": "Dose: {valor:.2f} mcg/kg/min",
         "resultado_u": "Dose: {valor:.4f} units/min"
+        "aforados": "gauged",
+        "solución salina 0.9%": "NS 0.9%",
+        "solución glucosada al 5%": "Dextrose 5%"
     }
 }
 # Selección de idioma
