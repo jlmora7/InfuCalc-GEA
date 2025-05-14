@@ -1,63 +1,167 @@
 
 import streamlit as st
 
-# Diccionario de medicamentos con sus constantes (mcg/kg/min por ml/h)
-meds_constantes = {
-    "Norepinefrina": 1.33,
-    "Propofol": 166.6,
-    "Midazolam": 1.5,
-    "Dexmedetomidina": 4.0,
-    "Fentanil": 10.0,
-    "Vasopresina": 0.0066,  # Puede no requerir peso
-    "Dopamina": 33.3
+# Mostrar logo o imagen principal (opcional)
+# st.image("logo.png", width=200)
+
+# Diccionario centralizado con toda la información de cada medicamento
+meds_info = {
+    "Norepinephrine / Norepinefrina": {
+        "constante": 1.33,
+        "presentación": "4mg/4ml (1mg/ml)",
+        "dosis_inicial": "0.1–0.5 mcg/kg/min IV",
+        "dosis_mantenimiento": "0.02–1 mcg/kg/min IV",
+        "preparación": "8 mg aforados en 100 cc de solución glucosada al 5%"
+    },
+    "Dopamine / Dopamina": {
+        "constante": 33.3,
+        "presentación": "200mg/5ml (40mg/ml)",
+        "dosis_inicial": "Shock: 1–50 mcg/kg/min IV / Falla cardiaca: 0.5–2 mcg/kg/min",
+        "dosis_mantenimiento": "1–5 mcg/kg/min / Bradicardia-vasopresor: 5–10 mcg/kg/min",
+        "preparación": "400 mg aforados en 250 cc de solución glucosada al 5%"
+    },
+    "Midazolam": {
+        "constante": 1.5,
+        "presentación": "15mg/3ml (5mg/ml)",
+        "dosis_inicial": "0.01–0.05 mg/kg",
+        "dosis_mantenimiento": "0.02–0.2 mg/kg/h (↓ 50% si TFG <10%)",
+        "preparación": "300 mg aforados en 200 cc de solución salina 0.9%"
+    },
+    "Dexmedetomidine / Dexmedetomidina": {
+        "constante": 4.0,
+        "presentación": "200mcg/2ml (100 mcg/ml)",
+        "dosis_inicial": "80–100 mcg/kg IV",
+        "dosis_mantenimiento": "0.8–1.2 mcg/kg/min",
+        "preparación": "40 mcg aforados en 100 cc de solución salina 0.9%"
+    },
+    "Fentanyl / Fentanilo": {
+        "constante": 10.0,
+        "presentación": "0.5mg/10ml (500 mcg/ml)",
+        "dosis_inicial": "1–2 mcg/kg",
+        "dosis_mantenimiento": "0.5–1 mcg/kg/h",
+        "preparación": "1 mg (1000 mcg) aforados en 100 cc de solución salina 0.9%"
+    },
+    "Vasopressin / Vasopresina": {
+        "constante": 0.0066,
+        "presentación": "20UI/ml",
+        "dosis_inicial": "No aplica",
+        "dosis_mantenimiento": "0.1–0.07 UI/min",
+        "preparación": "40 UI aforados en 100 cc de solución glucosada al 5%"
+    },
+    "Propofol": {
+        "constante": 166.6,
+        "presentación": "1g/100ml (10 mg/ml)",
+        "dosis_inicial": "2–2.5 mg/kg",
+        "dosis_mantenimiento": "25–75 mcg/kg/min IV",
+        "preparación": "No aplica"
+    }
 }
 
-# Diccionario de preparaciones
-meds_preparacion = {
-    "Norepinefrina": "8 mg aforar a 100 cc de solución glucosada al 5%",
-    "Dopamina": "400 mg aforar a 250 cc de solución glucosada al 5%",
-    "Dobutamina": "500 mg aforar a 250 cc de solución glucosada al 5%",
-    "Amiodarona": "900 mg en 250 cc de solución glucosada al 5% para 24 h",
-    "Vasopresina": "40 u aforadas en 100 cc de solución glucosada al 5%",
-    "Fentanil": "1 mg (1000 mcg) aforar a 100 cc de solución salina 0.9%",
-    "Midazolam": "300 mg en 200 cc de solución salina 0.9%",
-    "Dexmedetomidina": "40 mcg en 100 cc de solución salina 0.9%",
-    "Propofol": "No aplica",
-    "Vecuronio": "40 mg en 100 cc de solución salina al 0.9%",
-    "Rocuronio": "500 mg en 250 cc de solución salina al 0.9%"
+# Diccionario de traducción
+mensajes = {
+    "Español": {
+        "disclaimer": """
+        <div style="background-color:#5c5727;padding:20px;border-radius:10px;color:white">
+            <span style="font-size:20px">⚠️ <strong>Descargo de Responsabilidad:</strong></span>
+            <ul style="font-size:16px;">
+                <li>Esta herramienta tiene fines <strong>exclusivamente educativos e informativos</strong>. <strong>No sustituye el juicio clínico de profesionales de la salud</strong>.</li>
+                <li>Las decisiones relacionadas con el tratamiento deben ser tomadas únicamente por <strong>personal médico calificado</strong>, basándose en una <strong>evaluación integral del paciente</strong> y en los <strong>lineamientos de su institución</strong>.</li>
+                <li><strong>No debe utilizarse esta calculadora como única referencia para decisiones médicas.</strong> Verifique siempre los resultados obtenidos y tenga en cuenta el contexto clínico completo</li>
+                <li>Los autores declinan toda responsabilidad por el uso inapropiado de esta herramienta o por las consecuencias derivadas de su aplicación.</li>
+            </ul>
+        </div>
+        """,
+        "footer1": """<div style="text-align:center; padding-top: 30px; font-size: small; color: gray;">© 2025 InfuCalc GEA.</div>""",
+        "footer2": """<div style="text-align:center; padding-top: 10px; font-size: small; color: gray;">Creado por José Luis Mora Loján</div>""",
+        "descripción": "Aplicación médica construida para calcular dosis en mcg/kg/min o unidades/min a partir de la velocidad de infusión.",
+        "motivacional": "💡 Esa es la dosis calculada de tu infusión. ¡Excelente! Tú puedes 💪",
+        "titulo": "InfuCalc GEA 💉",
+        "idioma": "Selecciona el idioma / Select language",
+        "medicamento": "Selecciona el medicamento a calcular",
+        "presentación": "📦 Presentación",
+        "dosis_inicial": "💉 Dosis inicial",
+        "dosis_mantenimiento": "🔁 Dosis mantenimiento",
+        "preparación": "🧪 Preparación sugerida",
+        "velocidad": "Velocidad de infusión (ml/h)",
+        "peso": "Peso del paciente (kg)",
+        "resultado_mcg": "Dosis: {valor:.2f} mcg/kg/min",
+        "resultado_u": "Dosis: {valor:.4f} unidades/min"
+    },
+    "English": {
+        "disclaimer": """
+        <div style="background-color:#5c5727;padding:20px;border-radius:10px;color:white">
+            <span style="font-size:20px">⚠️ <strong>Important Disclaimer:</strong></span>
+            <ul style="font-size:16px;">
+                <li>This tool is intended for <strong>educational and informational purposes only</strong>. It does not replace clinical judgment by <strong>qualified healthcare professionals</strong>.</li>
+                <li>Treatment decisions must be made solely by <strong>licensed medical personnel</strong> based on a <strong>comprehensive evaluation of the patient</strong> and <strong>institutional guidelines</strong>.</li>
+                <li><strong>This calculator must not be used as the sole reference</strong> for medical decisions. Always verify the results and consider the full clinical context.</li>
+                <li>The authors disclaim all responsibility for inappropriate use or consequences derived from the application of this tool.</li>
+            </ul>
+        </div>
+        """,
+        "footer1": """<div style="text-align:center; padding-top: 30px; font-size: small; color: gray;">© 2025 InfuCalc GEA.</div>""",
+        "footer2": """<div style="text-align:center; padding-top: 10px; font-size: small; color: gray;">Created by José Luis Mora Loján</div>""",
+        "descripción": "Medical app designed to calculate doses in mcg/kg/min or units/min based on infusion rate.",
+        "motivacional": "💡 This is the calculated dose of your infusion. Excellent! You’ve got this 💪",
+        "titulo": "InfuCalc GEA 💉",
+        "idioma": "Select language / Selecciona el idioma",
+        "medicamento": "Select the drug to calculate",
+        "presentación": "📦 Presentation",
+        "dosis_inicial": "💉 Initial dose",
+        "dosis_mantenimiento": "🔁 Maintenance dose",
+        "preparación": "🧪 Suggested preparation",
+        "velocidad": "Infusion rate (ml/h)",
+        "peso": "Patient weight (kg)",
+        "resultado_mcg": "Dose: {valor:.2f} mcg/kg/min",
+        "resultado_u": "Dose: {valor:.4f} units/min"
+    }
 }
 
-st.title("Calculadora de Infusiones IV")
+# Selección de idioma
+lang = st.selectbox(mensajes["Español"]["idioma"], ["Español", "English"])
+
+# Título y descripción
+st.title(mensajes[lang]["titulo"])
+st.markdown(mensajes[lang]["descripción"])
 
 # Selección del medicamento
-med = st.selectbox("Selecciona el medicamento a calcular", list(meds_constantes.keys()))
+med = st.selectbox(mensajes[lang]["medicamento"], list(meds_info.keys()))
+info = meds_info[med]
 
-# Mostrar sugerencia de preparación si existe
-if med in meds_preparacion:
-    st.info(f"📃 Preparación sugerida: {meds_preparacion[med]}")
+# Mostrar información clínica y preparación
+st.info(f"{mensajes[lang]['presentación']}: {info['presentación']}
+
+{mensajes[lang]['dosis_inicial']}: {info['dosis_inicial']}
+
+{mensajes[lang]['dosis_mantenimiento']}: {info['dosis_mantenimiento']}
+
+{mensajes[lang]['preparación']}: {info['preparación']}")
 
 # Solicitar velocidad de infusión
-velocidad = st.number_input("Velocidad de infusión (ml/h)", min_value=0.0, step=0.1)
+velocidad = st.number_input(mensajes[lang]["velocidad"], min_value=0.0, step=0.1)
 
-# Mostrar o no peso según medicamento
-requiere_peso = med != "Vasopresina"
-
-peso = None
-if requiere_peso:
-    peso = st.number_input("Peso del paciente (kg)", min_value=0.0, step=0.1)
+# Determinar si requiere peso
+requiere_peso = "Vasopresina" not in med
+peso = st.number_input(mensajes[lang]["peso"], min_value=0.0, step=0.1) if requiere_peso else None
 
 # Cálculo
-constante = meds_constantes[med]
 resultado = None
-
 if velocidad > 0 and (not requiere_peso or (peso and peso > 0)):
     if requiere_peso:
-        resultado = (velocidad * constante) / peso
-        st.success(f"Dosis: {resultado:.2f} mcg/kg/min")
+        resultado = (velocidad * info['constante']) / peso
+        st.success(mensajes[lang]["resultado_mcg"].format(valor=resultado))
     else:
-        resultado = velocidad * constante
-        st.success(f"Dosis: {resultado:.4f} unidades/min")
+        resultado = velocidad * info['constante']
+        st.success(mensajes[lang]["resultado_u"].format(valor=resultado))
 
-# Mensaje final motivacional (como en el shortcut)
+# Mensaje motivacional
 if resultado:
-    st.info("Esa es la dosis por kg de tu infusión.\n\n ¡Excelente! Tú puedes")
+    st.info(mensajes[lang]["motivacional"])
+
+# Línea divisoria
+st.markdown("---")
+
+# Descargo de responsabilidad y pie de página
+st.markdown(mensajes[lang]["disclaimer"], unsafe_allow_html=True)
+st.markdown(mensajes[lang]["footer1"], unsafe_allow_html=True)
+st.markdown(mensajes[lang]["footer2"], unsafe_allow_html=True)
