@@ -125,9 +125,9 @@ mensajes = {
         "velocidad": "Infusion rate (ml/h)",
         "peso": "Patient weight (kg)",
         "resultado_mcg": "Dose: {valor:.2f} mcg/kg/min",
-        "resultado_u": "Dose: {valor:.4f} units/min"
-        "aforados": "gauged",
+        "resultado_u": "Dose: {valor:.4f} units/min",
         "solución salina 0.9%": "NS 0.9%",
+        "aforados": "assessed",
         "solución glucosada al 5%": "Dextrose 5%"
     }
 }
