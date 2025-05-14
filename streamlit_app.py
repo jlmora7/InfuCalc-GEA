@@ -135,7 +135,7 @@ st.info({mensajes[lang]['presentación']}: {info['presentación']})
 
 {mensajes[lang]['dosis_mantenimiento']}: {info['dosis_mantenimiento']}
 
-{mensajes[lang]['preparación']}: {info['preparación']}")
+{mensajes[lang]['preparación']}: {info['preparación']}
 
 # Solicitar velocidad de infusión
 velocidad = st.number_input(mensajes[lang]["velocidad"], min_value=0.0, step=0.1)
