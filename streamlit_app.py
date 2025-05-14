@@ -129,7 +129,7 @@ med = st.selectbox(mensajes[lang]["medicamento"], list(meds_info.keys()))
 info = meds_info[med]
 
 # Mostrar información clínica y preparación
-st.info("{mensajes[lang]['presentación']"}: {info['presentación']}
+st.info({mensajes[lang]['presentación']}: {info['presentación']})
 
 {mensajes[lang]['dosis_inicial']}: {info['dosis_inicial']}
 
