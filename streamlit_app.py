@@ -1,8 +1,4 @@
-
 import streamlit as st
-
-# Mostrar logo o imagen principal (opcional)
-# st.image("logo.png", width=200)
 
 # Diccionario centralizado con toda la información de cada medicamento
 meds_info = {
@@ -32,7 +28,7 @@ meds_info = {
         "presentación": "200mcg/2ml (100 mcg/ml)",
         "dosis_inicial": "80–100 mcg/kg IV",
         "dosis_mantenimiento": "0.8–1.2 mcg/kg/min",
-        "preparación": "40 mcg aforados en 100 cc de solución salina 0.9%"
+        "preparación": "40 mcg aforados en en 100 cc de solución salina 0.9%"
     },
     "Fentanyl / Fentanilo": {
         "constante": 10.0,
@@ -60,10 +56,10 @@ meds_info = {
 # Diccionario de traducción
 mensajes = {
     "Español": {
-        "disclaimer": """
-        <div style="background-color:#5c5727;padding:20px;border-radius:10px;color:white">
-            <span style="font-size:20px">⚠️ <strong>Descargo de Responsabilidad:</strong></span>
-            <ul style="font-size:16px;">
+         "disclaimer": """
+        <div style=\"background-color:#5c5727;padding:20px;border-radius:10px;color:white\">
+            <span style=\"font-size:20px\">⚠️ <strong>Descargo de Responsabilidad:</strong></span>
+            <ul style=\"font-size:16px;\">
                 <li>Esta herramienta tiene fines <strong>exclusivamente educativos e informativos</strong>. <strong>No sustituye el juicio clínico de profesionales de la salud</strong>.</li>
                 <li>Las decisiones relacionadas con el tratamiento deben ser tomadas únicamente por <strong>personal médico calificado</strong>, basándose en una <strong>evaluación integral del paciente</strong> y en los <strong>lineamientos de su institución</strong>.</li>
                 <li><strong>No debe utilizarse esta calculadora como única referencia para decisiones médicas.</strong> Verifique siempre los resultados obtenidos y tenga en cuenta el contexto clínico completo</li>
@@ -71,8 +67,16 @@ mensajes = {
             </ul>
         </div>
         """,
-        "footer1": """<div style="text-align:center; padding-top: 30px; font-size: small; color: gray;">© 2025 InfuCalc GEA.</div>""",
-        "footer2": """<div style="text-align:center; padding-top: 10px; font-size: small; color: gray;">Creado por José Luis Mora Loján</div>""",
+        "footer1": """
+        <div style=\"text-align:center; padding-top: 30px; font-size: small; color: gray;\">
+            © 2025 InfuCalc GEA.
+        </div>
+        """,
+        "footer2": """
+        <div style=\"text-align:center; padding-top: 30px; font-size: small; color: gray;\">
+            Creado por José Luis Mora Loján
+        </div>
+        """,
         "descripción": "Aplicación médica construida para calcular dosis en mcg/kg/min o unidades/min a partir de la velocidad de infusión.",
         "motivacional": "💡 Esa es la dosis calculada de tu infusión. ¡Excelente! Tú puedes 💪",
         "titulo": "InfuCalc GEA 💉",
@@ -89,9 +93,9 @@ mensajes = {
     },
     "English": {
         "disclaimer": """
-        <div style="background-color:#5c5727;padding:20px;border-radius:10px;color:white">
-            <span style="font-size:20px">⚠️ <strong>Important Disclaimer:</strong></span>
-            <ul style="font-size:16px;">
+        <div style=\"background-color:#5c5727;padding:20px;border-radius:10px;color:white\">
+            <span style=\"font-size:20px\">⚠️ <strong>Important Disclaimer:</strong></span>
+            <ul style=\"font-size:16px;\">
                 <li>This tool is intended for <strong>educational and informational purposes only</strong>. It does not replace clinical judgment by <strong>qualified healthcare professionals</strong>.</li>
                 <li>Treatment decisions must be made solely by <strong>licensed medical personnel</strong> based on a <strong>comprehensive evaluation of the patient</strong> and <strong>institutional guidelines</strong>.</li>
                 <li><strong>This calculator must not be used as the sole reference</strong> for medical decisions. Always verify the results and consider the full clinical context.</li>
@@ -99,8 +103,16 @@ mensajes = {
             </ul>
         </div>
         """,
-        "footer1": """<div style="text-align:center; padding-top: 30px; font-size: small; color: gray;">© 2025 InfuCalc GEA.</div>""",
-        "footer2": """<div style="text-align:center; padding-top: 10px; font-size: small; color: gray;">Created by José Luis Mora Loján</div>""",
+        "footer1": """
+        <div style=\"text-align:center; padding-top: 30px; font-size: small; color: gray;\">
+            © 2025 InfuCalc GEA.
+        </div>
+        """,
+        "footer2": """
+        <div style=\"text-align:center; padding-top: 30px; font-size: small; color: gray;\">
+            Created by José Luis Mora Loján
+        </div>
+        """,
         "descripción": "Medical app designed to calculate doses in mcg/kg/min or units/min based on infusion rate.",
         "motivacional": "💡 This is the calculated dose of your infusion. Excellent! You’ve got this 💪",
         "titulo": "InfuCalc GEA 💉",
@@ -116,12 +128,11 @@ mensajes = {
         "resultado_u": "Dose: {valor:.4f} units/min"
     }
 }
-
 # Selección de idioma
 lang = st.selectbox(mensajes["Español"]["idioma"], ["Español", "English"])
 
-# Título y descripción
 st.title(mensajes[lang]["titulo"])
+
 st.markdown(mensajes[lang]["descripción"])
 
 # Selección del medicamento
@@ -129,19 +140,13 @@ med = st.selectbox(mensajes[lang]["medicamento"], list(meds_info.keys()))
 info = meds_info[med]
 
 # Mostrar información clínica y preparación
-st.info({mensajes[lang]['presentación']}: {info['presentación']})
-
-{mensajes[lang]['dosis_inicial']}: {info['dosis_inicial']}
-
-{mensajes[lang]['dosis_mantenimiento']}: {info['dosis_mantenimiento']}
-
-{mensajes[lang]['preparación']}: {info['preparación']}
+st.info(f"{mensajes[lang]['presentación']}: {info['presentación']}\n\n{mensajes[lang]['dosis_inicial']}: {info['dosis_inicial']}\n\n{mensajes[lang]['dosis_mantenimiento']}: {info['dosis_mantenimiento']}\n\n{mensajes[lang]['preparación']}: {info['preparación']}")
 
 # Solicitar velocidad de infusión
 velocidad = st.number_input(mensajes[lang]["velocidad"], min_value=0.0, step=0.1)
 
-# Determinar si requiere peso
-requiere_peso = "Vasopresina" not in med
+# Mostrar o no peso según medicamento
+requiere_peso = med != "Vasopresina"
 peso = st.number_input(mensajes[lang]["peso"], min_value=0.0, step=0.1) if requiere_peso else None
 
 # Cálculo
@@ -154,14 +159,17 @@ if velocidad > 0 and (not requiere_peso or (peso and peso > 0)):
         resultado = velocidad * info['constante']
         st.success(mensajes[lang]["resultado_u"].format(valor=resultado))
 
-# Mensaje motivacional
+# Mensaje final motivacional
 if resultado:
     st.info(mensajes[lang]["motivacional"])
 
 # Línea divisoria
 st.markdown("---")
 
-# Descargo de responsabilidad y pie de página
-st.markdown(mensajes[lang]["disclaimer"], unsafe_allow_html=True)
+# Descargo de responsabilidad
+with st.container():
+    st.markdown(mensajes[lang]["disclaimer"], unsafe_allow_html=True)
+
+# Pie de página
 st.markdown(mensajes[lang]["footer1"], unsafe_allow_html=True)
 st.markdown(mensajes[lang]["footer2"], unsafe_allow_html=True)
