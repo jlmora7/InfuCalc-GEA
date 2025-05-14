@@ -60,4 +60,4 @@ if velocidad > 0 and (not requiere_peso or (peso and peso > 0)):
 
 # Mensaje final motivacional (como en el shortcut)
 if resultado:
-    st.info("🌟 Esa es la dosis por kg de tu infusión.\n\n✨ ¡Excelente! Tú puedes ✨")
+    st.info("Esa es la dosis por kg de tu infusión.\n\n ¡Excelente! Tú puedes")
