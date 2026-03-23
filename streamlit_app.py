@@ -69,7 +69,7 @@ mensajes = {
         """,
         "footer1": """
         <div style=\"text-align:center; padding-top: 30px; font-size: small; color: gray;\">
-            © 2026 InfuCalc GEA.
+            © 2026 InfuCalc.
         </div>
         """,
         "footer2": """
